@@ -303,7 +303,10 @@ SubtitleRenderer(int display, int layer,
                            0, (int) screen_height_-1);
 
     config_.buffer_x = 0;
-    config_.buffer_y = screen_height_ - buffer_top - 1;
+    // if (top_)
+      config_.buffer_y = config_.box_offset;
+    // else
+      // config_.buffer_y = screen_height_ - buffer_top - 1;
     config_.buffer_width = screen_width_;
     config_.buffer_height = buffer_top - buffer_bottom + 1;
     config_.margin_left = (screen_width_ - screen_height_) / 2 +
