@@ -530,7 +530,10 @@ prepare(const std::vector<std::string>& text_lines) BOOST_NOEXCEPT {
     internal_lines_[i] = get_internal_chars(text_lines[i], tag_tracker);
     prepare_glyphs(internal_lines_[i]);
     line_widths_[i] = get_text_width(internal_lines_[i]);
-    line_positions_[i].second = config_.margin_bottom + (n_lines-i-1)*config_.line_height;
+    if (n_lines == 1 /* && top_ */)
+      line_positions_[i].second = config_.margin_bottom + (n_lines-i)*config_.line_height;
+    else
+      line_positions_[i].second = config_.margin_bottom + (n_lines-i-1)*config_.line_height;
     if (centered_)
       line_positions_[i].first = config_.buffer_width/2 - line_widths_[i]/2;
     else
@@ -563,7 +566,14 @@ void SubtitleRenderer::draw() BOOST_NOEXCEPT {
   }
 
   //font background
+  /* TODO: DEBUG printf("Number of lines: %d\n", n_lines); */
   for (size_t i = 0; i < n_lines; ++i) {
+    /* TODO: DEBUG auto text = internal_lines_[i];
+    for (auto c = text.begin(); c != text.end(); ++c) {
+      printf("%c", *c);
+    }
+    printf("\nLinepos first: %d\n", line_positions_[i].first);
+    printf("Linepos second: %d\n\n", line_positions_[i].second); */
     draw_text(vg_font_border_,
               internal_lines_[i],
               line_positions_[i].first, line_positions_[i].second,
