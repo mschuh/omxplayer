@@ -311,7 +311,7 @@ SubtitleRenderer(int display, int layer,
     config_.buffer_height = buffer_top - buffer_bottom + 1;
     config_.margin_left = (screen_width_ - screen_height_) / 2 +
                    static_cast<int>(margin_left * screen_height_ + 0.5f);
-    config_.margin_bottom = abs_margin_bottom - buffer_bottom;
+    config_.margin_bottom = abs_margin_bottom - buffer_bottom + config_.line_height;
     config_fullscreen_ = config_; // save full-screen config for scaling reference.
 
     initialize_window(display, layer);
